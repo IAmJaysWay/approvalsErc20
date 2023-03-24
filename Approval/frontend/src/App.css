@@ -1,0 +1,32 @@
+.App {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.resolutions {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 80px;
+  width: 100%;
+}
+
+.searchOptions {
+  width: 600px;
+  max-width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+}
+
+.table {
+  width: 1000px;
+  max-width: 95%;
+}
