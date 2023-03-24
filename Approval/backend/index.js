@@ -16,7 +16,7 @@ app.get("/approvals", async (req, res) => {
     method: "GET",
     headers: {
       "accept": "application/json",
-      "X-API-Key": "KVuq1YrCBfFSjtlFDHB2zEhEuvIxsU92aMO4rkW7QJj9zkFa9JQbEDwmlKjcilly",
+      "X-API-Key": process.env.MORALIS_KEY,
     }
   }
   const walletAddresses = [wallet];
