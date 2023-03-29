@@ -64,6 +64,50 @@ function App() {
       value: "polygon",
       label: "Polygon",
     },
+    {
+      value: "goerli",
+      label: "Goerli",
+    },
+    {
+      value: "sepolia",
+      label: "Sepolia",
+    },
+    {
+      value: "mumbai",
+      label: "Mumbai",
+    },
+    {
+      value: "bsc testnet",
+      label: "Bsc Testnet",
+    },
+    {
+      value: "avalanche",
+      label: "Avalanche",
+    },
+    {
+      value: "avalanche testnet",
+      label: "Avalanche Testnet",
+    },
+    {
+      value: "fantom",
+      label: "Fantom",
+    },
+    {
+      value: "palm",
+      label: "Palm",
+    },
+    {
+      value: "cronos",
+      label: "Cronos",
+    },
+    {
+      value: "cronos testnet",
+      label: "Cronos Testnet",
+    },
+    {
+      value: "arbitrum",
+      label: "Arbitrum",
+    },
   ];
 
   async function onSearch() {
