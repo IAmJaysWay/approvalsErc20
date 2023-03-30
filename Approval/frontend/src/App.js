@@ -1,16 +1,48 @@
 import "./App.css";
 import { useState } from "react";
 import logo from "./moralisLogo.svg";
-import { Table, Input, Select, Spin, message } from "antd";
+import { Table, Input, Select, Spin, message, Col, Row  } from "antd";
 import axios from "axios";
+import Web3 from "web3";
 
 const { Search } = Input;
+
+
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
   const [walletAddress, setWalletAddress] = useState(null);
   const [searching, setSearching] = useState(false);
   const [chain, setChain] = useState("eth");
   const [dataSource, setDataSource] = useState(null);
+
+  const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+
+  let approveAbi = [
+    {
+      "constant": false,
+      "inputs": [
+          {
+              "name": "_spender",
+              "type": "address"
+          },
+          {
+              "name": "_value",
+              "type": "uint256"
+          }
+      ],
+      "name": "approve",
+      "outputs": [
+          {
+              "name": "",
+              "type": "bool"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
+  //web3.eth.getAccounts().then(console.log);
 
   const columns = [
     {
@@ -46,11 +78,11 @@ function App() {
       
     },
     {
-      title: "Possible Spam",
-      dataIndex: "possible_spam",
-      key: "possible_spam",
-      render: (text) => <>
-      {text ? <div>!!</div> : <div>-</div>}
+      title: "Revoke",
+      dataIndex: "contract_address",
+      key: "contract_address",
+      render: (text, record) => <>
+      <button onClick={ () => handleRevoke(text, record.to_wallet)}>Revoke</button>
       </>
     }
   ];
@@ -109,6 +141,15 @@ function App() {
       label: "Arbitrum",
     },
   ];
+
+  async function handleRevoke(contract_address, spender_address){
+    let accounts = await web3.eth.requestAccounts()
+    let contract = new web3.eth.Contract(approveAbi, contract_address);
+    contract.methods.approve(spender_address, 0).send({from: accounts[0]})
+    .on('receipt', function(){
+        console.log("done");
+    });
+  }
 
   async function onSearch() {
     setSearching(true);
