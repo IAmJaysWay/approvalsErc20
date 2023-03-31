@@ -15,8 +15,7 @@ function App() {
   const [chain, setChain] = useState("eth");
   const [dataSource, setDataSource] = useState(null);
   const [revoke, setRevoke] = useState(false);
-
-  const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+  const web3 = window.ethereum ? new Web3(Web3.givenProvider || "ws://localhost:8545") : null;
 
   let approveAbi = [
     {
@@ -43,8 +42,6 @@ function App() {
       "type": "function"
     }
   ]
-  //web3.eth.getAccounts().then(console.log);
-
   const columns = [
     {
       title: "Tx Hash",
@@ -191,11 +188,14 @@ function App() {
     }
 
     setDataSource(res.data);
-    let accounts = await web3.eth.requestAccounts();
+    if(web3){
+      let accounts = await web3.eth.requestAccounts();
 
-    if(accounts[0].toLowerCase() === walletAddress.toLowerCase()){
-      setRevoke(true);
+      if(accounts[0].toLowerCase() === walletAddress.toLowerCase()){
+        setRevoke(true);
+      }
     }
+
     setSearching(false);
   }
 
