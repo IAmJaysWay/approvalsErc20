@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import logo from "./moralisLogo.svg";
-import { Table, Input, Select, Spin, message, Col, Row  } from "antd";
+import { Table, Input, Select, Spin, message } from "antd";
 import axios from "axios";
 import Web3 from "web3";
 
@@ -49,7 +49,10 @@ function App() {
       title: "Tx Hash",
       dataIndex: "transaction_hash",
       key: "transaction_hash",
-      render: (text) =><a href={`https://etherscan.io/tx/${text}`} target="_blank" rel="noreferrer">{text.slice(0,4)}...{text.slice(-4)}</a>
+      render: (text) =><a href={
+        `https://${chains.find(e=>e.value === chain).explorer}/tx/${text}`
+      
+      } target="_blank" rel="noreferrer">{text.slice(0,4)}...{text.slice(-4)}</a>
     },
     {
       title: "Updated",
@@ -61,13 +64,13 @@ function App() {
       title: "Asset",
       dataIndex: "contract_address",
       key: "contract_address",
-      render: (text) =><a href={`https://etherscan.io/address/${text}`} target="_blank" rel="noreferrer">{text.slice(0,4)}...{text.slice(-4)}</a>
+      render: (text) =><a href={`https://${chains.find(e=>e.value === chain).explorer}/address/${text}`} target="_blank" rel="noreferrer">{text.slice(0,4)}...{text.slice(-4)}</a>
     },
     {
       title: "Approved Spender",
       dataIndex: "to_wallet",
       key: "to_wallet",
-      render: (text) =><a href={`https://etherscan.io/address/${text}`} target="_blank" rel="noreferrer">{text.slice(0,4)}...{text.slice(-4)}</a>
+      render: (text) =><a href={`https://${chains.find(e=>e.value === chain).explorer}/address/${text}`} target="_blank" rel="noreferrer">{text.slice(0,4)}...{text.slice(-4)}</a>
     },
     {
       title: "Allowance",
@@ -91,54 +94,72 @@ function App() {
     {
       value: "eth",
       label: "Ethereum",
+      explorer: "etherscan.io"
     },
     {
       value: "polygon",
       label: "Polygon",
+      explorer: "polygonscan.com",
     },
     {
       value: "goerli",
       label: "Goerli",
+      explorer: "goerli.etherscan.io",
     },
     {
       value: "sepolia",
       label: "Sepolia",
+      explorer: "sepolia.etherscan.io"
     },
     {
       value: "mumbai",
       label: "Mumbai",
+      explorer: "mumbai.polygonscan.com"
+    },
+    {
+      value: "bsc",
+      label: "Bsc",
+      explorer: "bscscan.com"
     },
     {
       value: "bsc testnet",
       label: "Bsc Testnet",
+      explorer: "testnet.bscscan.com",
     },
     {
       value: "avalanche",
       label: "Avalanche",
+      explorer: "snowtrace.io"
     },
     {
       value: "avalanche testnet",
       label: "Avalanche Testnet",
+      explorer: "testnet.snowtrace.io"
     },
     {
       value: "fantom",
       label: "Fantom",
+      explorer: "ftmscan.com"
     },
     {
       value: "palm",
       label: "Palm",
+      explorer: "explorer.palm.io"
     },
     {
       value: "cronos",
       label: "Cronos",
+      explorer: "cronoscan.com"
     },
     {
       value: "cronos testnet",
       label: "Cronos Testnet",
+      explorer: "testnet.cronoscan.com"
     },
     {
       value: "arbitrum",
       label: "Arbitrum",
+      explorer: "arbiscan.io"
     },
   ];
 
