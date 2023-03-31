@@ -14,10 +14,11 @@ function App() {
   const [searching, setSearching] = useState(false);
   const [chain, setChain] = useState("eth");
   const [dataSource, setDataSource] = useState(null);
+  const [revoke, setRevoke] = useState(false);
 
   const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
-  const approveAbi = [
+  let approveAbi = [
     {
       "constant": false,
       "inputs": [
@@ -85,7 +86,7 @@ function App() {
       dataIndex: "contract_address",
       key: "contract_address",
       render: (text, record) => <>
-      <button onClick={ () => handleRevoke(text, record.to_wallet)}>Revoke</button>
+      <button onClick={ () => handleRevoke(text, record.to_wallet)} disabled={!revoke}>Revoke</button>
       </>
     }
   ];
@@ -190,6 +191,11 @@ function App() {
     }
 
     setDataSource(res.data);
+    let accounts = await web3.eth.requestAccounts();
+
+    if(accounts[0].toLowerCase() === walletAddress.toLowerCase()){
+      setRevoke(true);
+    }
     setSearching(false);
   }
 
@@ -209,6 +215,7 @@ function App() {
               onChange={(val) => {
                 setChain(val);
                 setDataSource(null);
+                setRevoke(false);
               }}
             />
           )}
@@ -218,6 +225,7 @@ function App() {
             onChange={(e) => {
               setWalletAddress(e.target.value);
               setDataSource(null);
+              setRevoke(false);
             }}
             placeholder="Wallet Address..."
             enterButton="Search"
